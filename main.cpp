@@ -45,6 +45,22 @@ int main(int argc, char* argv[]){
 	*	TCS between processes, starting at 15ms, for every context switch
 	*		8ms for removing 'before' process
 	*		7ms for selecting and resuming 'after' process
+	*		Does not happen to the very first process in each algorithm
+	*
+	*	After a process finishes, a process might not be available to continue, wait til one is ready
+	*		Keep track of completion through remaining processes not if a process is found to continue
+	*/
+
+	// See README for sample output
+
+	// Part II additions
+
+	/*
+	* 10% of processes begin at time 0, other 90% comes in at random times
+	*	Use http://www.cs.rpi.edu/~goldsd/docs/fall2013-csci4210/ExponentialRandom.java.txt for random times	
+	* 
+	* There may be times when no process is running
+	* This part is flagged using -PART2 in command-line
 	*/
 
 	return EXIT_SUCCESS;
