@@ -5,3 +5,5 @@ Right now FCFS and SJF are basically working. RR is in the works and should be p
 Things are structured in a way that part B should only be a quick addition.
 
 Otherwise the rest of the work lies in implementing all of the different strategies.
+
+Oh, also, support for more CPUs is required, thats a matter of seperating a Processor from a Scheduler. I'll take care of that soon.
