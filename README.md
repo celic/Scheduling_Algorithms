@@ -1,7 +1,11 @@
 Operating Systems
+
 Project 1 - Process Management Simulation System
+
 Chris Celi, Damian Mastylo, Austin Gulati
+
 10/30/13
+
 
 This project is to be completed individually or in teams of up to three students. Beyond your team, do not share code or review anyone else's code. You may discuss the problem and potential solutions, but copying or using someone else's code is strictly forbidden. Feel free to use the LMS Discussion Board to discuss this assignment (and find teammates).
 
