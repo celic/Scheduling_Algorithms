@@ -7,3 +7,11 @@ Things are structured in a way that part B should only be a quick addition.
 Otherwise the rest of the work lies in implementing all of the different strategies.
 
 Oh, also, support for more CPUs is required, thats a matter of seperating a Processor from a Scheduler. I'll take care of that soon.
+
+--------
+
+Touched up some things. We need to implement TCS, time for context switches, which is just a flat 15ms whenever a process is changed to another process, but not before the first process or after the last. 
+
+It doesn't matter for part I, but I preemptive and non-preemptive SJF two separate instances of the object because that is what we will need for part II (separate stats and such.) I also added more stats to the Scheduler class that will have to be worked in eventually and outputted after all processes run in a comparison.
+
+I lastly imported his ExponentialRandom class so we can call for the random numbers as they ask for part II, again not necessary now but will be later.

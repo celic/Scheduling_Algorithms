@@ -9,8 +9,14 @@ public class Main
 {
     private static final Integer N = 20; // Number of processes
     private static final Integer M = 1;  // Number of cores
+    private static final Integer TCS = 15;  // Duration of context switching
+
     public static void main(String[] args)
     {
+        // Create ExponentialRandom object for random times
+        ExponentialRandom expRand = new ExponentialRandom();
+        // use via expRand.nextInt()
+
         // Create processes
         List<Process> processes = new ArrayList<Process>();
         Random random = new Random();
