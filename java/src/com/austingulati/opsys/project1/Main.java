@@ -24,7 +24,13 @@ public class Main
 
         // Create schedulers
         List<Scheduler> schedulers = new ArrayList<Scheduler>();
-        schedulers.addAll(Arrays.asList(new FirstComeScheduler(), new ShortestJobFirstScheduler()));
+
+        // Need a temp object for a preemptive SJF
+        ShortestJobFirstScheduler preemptiveShortestJob = new ShortestJobFirstScheduler();
+        preemptiveShortestJob.enablePreemption();
+
+        // Add schedulers to the list
+        schedulers.addAll(Arrays.asList(new FirstComeScheduler(), new ShortestJobFirstScheduler(), preemptiveShortestJob));
 
         // Add processes to schedulers
         for(Scheduler scheduler : schedulers)
@@ -32,6 +38,7 @@ public class Main
             scheduler.addProcesses(processes);
         }
 
+        // Run schedulers
         for(Scheduler scheduler : schedulers)
         {
             System.out.println("Using scheduler: " + scheduler.getName());
@@ -39,6 +46,7 @@ public class Main
             {
                 scheduler.tick();
             }
+            System.out.println();
         }
 
         // Run system
