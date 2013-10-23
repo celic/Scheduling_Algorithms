@@ -46,6 +46,7 @@ public class Main
             {
                 scheduler.tick();
             }
+            System.out.println();
         }
 
         // Run system

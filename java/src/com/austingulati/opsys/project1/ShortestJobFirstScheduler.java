@@ -6,7 +6,7 @@ class ShortestJobFirstScheduler extends Scheduler
 
     public String getName()
     {
-        return "Shortest Job First (SJF)";
+        return "Shortest Job First (SJF) with" + (preemption ? " preemption" : "out preemption");
     }
 
     public void enablePreemption()
