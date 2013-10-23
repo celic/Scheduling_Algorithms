@@ -8,9 +8,12 @@
  *  Exponential distribution: average arrival rate
  */
 
+package com.austingulati.opsys.project1;
+
+import java.lang.Math;
+
 public class ExponentialRandom
 {
-
     public int nextInt()
     {
         double lambda = 0.001;
@@ -20,7 +23,10 @@ public class ExponentialRandom
         while(true)
         {
             x = -Math.log(r) / lambda;
-            if(x > 8000) {i--; continue;}
+            if(x > 8000)
+            {
+                continue;
+            }
             break;
         }
 
