@@ -7,7 +7,7 @@ abstract class Scheduler
 {
     List<Process> processes = new ArrayList<Process>(), finishedProcesses = new ArrayList<Process>();
     Process currentProcess = null;
-    Integer time = 0, waitingTime = 0;
+    Integer time = 0, waitingTime = 0, maxTime = 0, averageTime = 0, minTime = 0;
 
     public void addProcess(Process process)
     {
