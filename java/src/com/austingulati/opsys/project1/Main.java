@@ -9,7 +9,7 @@ public class Main
 {
     private static final Integer N = 20; // Number of processes
     public static final Integer M = 1;  // Number of cores
-    private static final Integer TCS = 15;  // Duration of context switching
+    public static final Integer TCS = 15;  // Duration of context switching
 
     public static void main(String[] args)
     {
