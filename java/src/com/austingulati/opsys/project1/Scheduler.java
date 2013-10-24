@@ -115,7 +115,6 @@ abstract class Scheduler
 
     public void printResults()
     {
-        
         int minTurnaroundTime = Integer.MAX_VALUE;
         int avgTurnaroundTime = 0;
         int maxTurnaroundTime = 0;
@@ -168,7 +167,7 @@ abstract class Scheduler
 
         int finishedProcessesSize = finishedProcesses.size();
         avgTurnaroundTime /= finishedProcessesSize;
-        avgInitialWaitTime /= / finishedProcessesSize;
+        avgInitialWaitTime /= finishedProcessesSize;
         avgTotalWaitTime /= finishedProcessesSize;
 
         System.out.printf("Number of CPUs: %d\n", Main.M);
