@@ -140,9 +140,6 @@ abstract class Scheduler
             }
             if (process.getTimeTotal() < minTurnaroundTime)
             {
-                // Not working for the Shortest Job First schedulers, got a soccer game
-                // can someone look into this?
-                System.out.printf("getTimeTotal() is %dms\n", process.getTimeTotal());
                 minTurnaroundTime = process.getTimeTotal();
             }
 
