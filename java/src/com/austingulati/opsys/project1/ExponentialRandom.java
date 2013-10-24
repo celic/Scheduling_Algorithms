@@ -20,6 +20,7 @@ public class ExponentialRandom
         double r = Math.random();
         double x;
 
+        // Not ideal, but it works for now
         while(true)
         {
             x = -Math.log(r) / lambda;

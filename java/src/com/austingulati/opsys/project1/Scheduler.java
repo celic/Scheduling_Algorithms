@@ -168,7 +168,7 @@ abstract class Scheduler
         avgInitialWaitTime = avgInitialWaitTime / finishedProcessesSize;
         avgTotalWaitTime = avgTotalWaitTime / finishedProcessesSize;
 
-        System.out.printf("Number of CPUs: (INSERT HERE)\n");
+        System.out.printf("Number of CPUs: %d\n", Main.M);
         System.out.printf("Turnaround time: min %dms ms; avg %dms ms; max %dms ms\n", minTurnaroundTime, avgTurnaroundTime, maxTurnaroundTime);
         System.out.printf("Initial wait time: min %dms ms; avg %dms ms; max %dms ms\n", minInitialWaitTime, avgInitialWaitTime, maxInitialWaitTime);
         System.out.printf("Total wait time: min %dms ms; avg %dms ms; max %dms ms\n\n", minTotalWaitTime, avgTotalWaitTime, maxTotalWaitTime);
