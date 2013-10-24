@@ -112,4 +112,65 @@ abstract class Scheduler
         processes.remove(process);
         finishedProcesses.add(process);
     }
+
+    public void printResults()
+    {
+        int avgTurnaroundTime = 0;
+        int avgInitialWaitTime = 0;
+        int avgTotalWaitTime = 0;
+        int minTurnaroundTime = 1000000;
+        int minInitialWaitTime = 1000000;
+        int minTotalWaitTime = 1000000;
+        int maxTurnaroundTime = 0;
+        int maxInitialWaitTime = 0;
+        int maxTotalWaitTime = 0;
+
+        for(Process process : finishedProcesses)
+        {
+            avgTurnaroundTime += process.getTimeTotal();
+            avgInitialWaitTime += process.getTimeInitiallyWaiting();
+            avgTotalWaitTime += process.getTimeWaiting();
+
+
+            if (process.getTimeTotal() > maxTurnaroundTime)
+            {
+                maxTurnaroundTime = process.getTimeTotal();
+            }
+            else if (process.getTimeTotal() < minTurnaroundTime)
+            {
+                // Not working for the Shortest Job First schedulers, got a soccer game
+                // can someone look into this?
+                System.out.printf("getTimeTotal() is %dms\n", process.getTimeTotal());
+                minTurnaroundTime = process.getTimeTotal();
+            }
+
+            if (process.getTimeInitiallyWaiting() > maxInitialWaitTime)
+            {
+                maxInitialWaitTime = process.getTimeInitiallyWaiting();
+            }
+            else if (process.getTimeInitiallyWaiting() < minInitialWaitTime)
+            {
+                minInitialWaitTime = process.getTimeInitiallyWaiting();
+            }
+
+            if (process.getTimeWaiting() > maxTotalWaitTime)
+            {
+                maxTotalWaitTime = process.getTimeWaiting();
+            }
+            else if (process.getTimeWaiting() < minTotalWaitTime)
+            {
+                minTotalWaitTime = process.getTimeWaiting();
+            }
+        }
+
+        int finishedProcessesSize = finishedProcesses.size();
+        avgTurnaroundTime = avgTurnaroundTime / finishedProcessesSize;
+        avgInitialWaitTime = avgInitialWaitTime / finishedProcessesSize;
+        avgTotalWaitTime = avgTotalWaitTime / finishedProcessesSize;
+
+        System.out.printf("Number of CPUs: (INSERT HERE)\n");
+        System.out.printf("Turnaround time: min %dms ms; avg %dms ms; max %dms ms\n", minTurnaroundTime, avgTurnaroundTime, maxTurnaroundTime);
+        System.out.printf("Initial wait time: min %dms ms; avg %dms ms; max %dms ms\n", minInitialWaitTime, avgInitialWaitTime, maxInitialWaitTime);
+        System.out.printf("Total wait time: min %dms ms; avg %dms ms; max %dms ms\n\n", minTotalWaitTime, avgTotalWaitTime, maxTotalWaitTime);
+    }
 }

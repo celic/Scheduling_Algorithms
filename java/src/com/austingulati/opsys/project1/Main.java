@@ -53,19 +53,22 @@ public class Main
                 scheduler.tick();
             }
             System.out.println();
+
+            // Print final results
+            scheduler.printResults();
         }
 
         // Run system
-//        System.out.println("   TIME\t|  FCFS\t|   SJF\t| SJF+P\t| RR\t");
-//        while(schedulers.size() > 0)
-//        {
-//            System.out.printf("%7d\t| ", schedulers.get(0).getTime());
-//            for(Scheduler scheduler : schedulers)
-//            {
-//                scheduler.tick();
-//                System.out.printf("%5d\t| ", scheduler.getCurrentProcess().getId());
-//            }
-//            System.out.println();
+       // System.out.println("   TIME\t|  FCFS\t|   SJF\t| SJF+P\t| RR\t");
+       // while(schedulers.size() > 0)
+       // {
+       //     System.out.printf("%7d\t| ", schedulers.get(0).getTime());
+       //     for(Scheduler scheduler : schedulers)
+       //     {
+       //         scheduler.tick();
+       //         System.out.printf("%5d\t| ", scheduler.getCurrentProcess().getId());
+       //     }
+       //     System.out.println();
 //        }
     }
 }
