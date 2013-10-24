@@ -2,7 +2,7 @@ package com.austingulati.opsys.project1;
 
 public class Process
 {
-    private Integer id, priority, timeRemaining, timeTotal, timeInitiallyWaiting, timeWaiting = 0;
+    private Integer id, priority, timeRemaining, timeTotal = 0, timeInitiallyWaiting = 0, timeWaiting = 0;
 
     public Process(Integer id, Integer timeRemaining, Integer priority)
     {
