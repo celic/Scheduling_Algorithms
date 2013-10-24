@@ -138,7 +138,7 @@ abstract class Scheduler
             {
                 maxTurnaroundTime = process.getTimeTotal();
             }
-            else if (process.getTimeTotal() < minTurnaroundTime)
+            if (process.getTimeTotal() < minTurnaroundTime)
             {
                 // Not working for the Shortest Job First schedulers, got a soccer game
                 // can someone look into this?
@@ -150,7 +150,7 @@ abstract class Scheduler
             {
                 maxInitialWaitTime = process.getTimeInitiallyWaiting();
             }
-            else if (process.getTimeInitiallyWaiting() < minInitialWaitTime)
+            if (process.getTimeInitiallyWaiting() < minInitialWaitTime)
             {
                 minInitialWaitTime = process.getTimeInitiallyWaiting();
             }
@@ -159,7 +159,7 @@ abstract class Scheduler
             {
                 maxTotalWaitTime = process.getTimeWaiting();
             }
-            else if (process.getTimeWaiting() < minTotalWaitTime)
+            if (process.getTimeWaiting() < minTotalWaitTime)
             {
                 minTotalWaitTime = process.getTimeWaiting();
             }
@@ -171,8 +171,8 @@ abstract class Scheduler
         avgTotalWaitTime /= finishedProcessesSize;
 
         System.out.printf("Number of CPUs: %d\n", Main.M);
-        System.out.printf("Turnaround time: min %dms ms; avg %dms ms; max %dms ms\n", minTurnaroundTime, avgTurnaroundTime, maxTurnaroundTime);
-        System.out.printf("Initial wait time: min %dms ms; avg %dms ms; max %dms ms\n", minInitialWaitTime, avgInitialWaitTime, maxInitialWaitTime);
-        System.out.printf("Total wait time: min %dms ms; avg %dms ms; max %dms ms\n\n", minTotalWaitTime, avgTotalWaitTime, maxTotalWaitTime);
+        System.out.printf("Turnaround time: min %dms; avg %dms; max %dms\n", minTurnaroundTime, avgTurnaroundTime, maxTurnaroundTime);
+        System.out.printf("Initial wait time: min %dms; avg %dms; max %dms\n", minInitialWaitTime, avgInitialWaitTime, maxInitialWaitTime);
+        System.out.printf("Total wait time: min %dms; avg %dms; max %dms\n\n", minTotalWaitTime, avgTotalWaitTime, maxTotalWaitTime);
     }
 }
