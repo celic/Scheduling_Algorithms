@@ -115,14 +115,17 @@ abstract class Scheduler
 
     public void printResults()
     {
+        
+        int minTurnaroundTime = Integer.MAX_VALUE;
         int avgTurnaroundTime = 0;
-        int avgInitialWaitTime = 0;
-        int avgTotalWaitTime = 0;
-        int minTurnaroundTime = 1000000;
-        int minInitialWaitTime = 1000000;
-        int minTotalWaitTime = 1000000;
         int maxTurnaroundTime = 0;
+
+        int minInitialWaitTime = Integer.MAX_VALUE;
+        int avgInitialWaitTime = 0;
         int maxInitialWaitTime = 0;
+        
+        int minTotalWaitTime = Integer.MAX_VALUE;
+        int avgTotalWaitTime = 0;
         int maxTotalWaitTime = 0;
 
         for(Process process : finishedProcesses)
@@ -164,9 +167,9 @@ abstract class Scheduler
         }
 
         int finishedProcessesSize = finishedProcesses.size();
-        avgTurnaroundTime = avgTurnaroundTime / finishedProcessesSize;
-        avgInitialWaitTime = avgInitialWaitTime / finishedProcessesSize;
-        avgTotalWaitTime = avgTotalWaitTime / finishedProcessesSize;
+        avgTurnaroundTime /= finishedProcessesSize;
+        avgInitialWaitTime /= / finishedProcessesSize;
+        avgTotalWaitTime /= finishedProcessesSize;
 
         System.out.printf("Number of CPUs: %d\n", Main.M);
         System.out.printf("Turnaround time: min %dms ms; avg %dms ms; max %dms ms\n", minTurnaroundTime, avgTurnaroundTime, maxTurnaroundTime);
