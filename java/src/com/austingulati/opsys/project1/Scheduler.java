@@ -7,7 +7,7 @@ abstract class Scheduler
 {
     List<Process> processes = new ArrayList<Process>(), finishedProcesses = new ArrayList<Process>();
     Process currentProcess = null;
-    Integer time = 0, waitingTime = 0, maxTime = 0, averageTime = 0, minTime = 0;
+    Integer time = 0, workingTime = 0, waitingTime = 0, maxTime = 0, averageTime = 0, minTime = 0;
 
     public void addProcess(Process process)
     {
@@ -59,6 +59,7 @@ abstract class Scheduler
                 System.out.printf("[time %dms] Process %d completed its CPU burst (turnaround time %dms, initial wait time %dms, total wait time %dms)\n", time, lastProcess.getId(), lastProcess.getTimeTotal(), lastProcess.getTimeInitiallyWaiting(), lastProcess.getTimeWaiting());
                 removeProcess(lastProcess);
                 setCurrentProcess(null);
+                setWorkingTime(0);
             }
         }
 
@@ -78,6 +79,7 @@ abstract class Scheduler
         }
 
         time++;
+        workingTime++;
     }
 
     public Boolean hasCurrentProcess()
@@ -98,6 +100,16 @@ abstract class Scheduler
     public Integer getTime()
     {
         return time;
+    }
+
+    public Integer getWorkingTime()
+    {
+        return workingTime;
+    }
+
+    public void setWorkingTime(Integer workingTime)
+    {
+        this.workingTime = workingTime;
     }
 
     public void setWaitingTime(Integer waitingTime)

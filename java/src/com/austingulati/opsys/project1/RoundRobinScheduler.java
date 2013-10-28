@@ -16,7 +16,7 @@ class RoundRobinScheduler extends Scheduler
         {
             return null;
         }
-        else if(getTime() % sliceLength == 0)   // If a process ends on say, 165ms, nothing happens the other 35 ms
+        else if(getWorkingTime() % sliceLength == 0)   // If a process ends on say, 165ms, nothing happens the other 35 ms
         {
             System.out.printf("Context Switching FROM: %d TO: %d\n", key, ((key+1)%processes.size()));
             key = (key + 1) % processes.size();
