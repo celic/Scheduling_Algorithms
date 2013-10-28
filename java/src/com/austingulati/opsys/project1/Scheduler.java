@@ -36,6 +36,9 @@ abstract class Scheduler
     // Increments to the next step
     public void tick()
     {
+
+        // Austin, can you explain what your thought process is here? I'm not sure if this can be worked to include RR Scheduling
+        // It might be easier to abstract a 'simulate()' function from this class to each type of scheduler
         if(getWaitingTime() > 0)
         {
             setWaitingTime(getWaitingTime() - 1);

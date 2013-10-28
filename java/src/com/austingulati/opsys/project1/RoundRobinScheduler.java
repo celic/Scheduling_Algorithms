@@ -16,7 +16,7 @@ class RoundRobinScheduler extends Scheduler
         {
             return null;
         }
-        else if(getTime() % sliceLength == 0)
+        else if(getTime() % sliceLength == 0)   // If a process ends on say, 165ms, nothing happens the other 35 ms
         {
             key = (key + 1) % processes.size();
             return processes.get(key);
