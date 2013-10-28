@@ -32,7 +32,10 @@ public class Main
         List<Scheduler> schedulers = new ArrayList<Scheduler>();
 
         // Add schedulers to the list
-        schedulers.addAll(Arrays.asList(new FirstComeScheduler(), new ShortestJobFirstScheduler(), new RoundRobinScheduler()));
+        schedulers.addAll(Arrays.asList(new FirstComeScheduler(), 
+                                        new ShortestJobFirstScheduler(), 
+                                        new RoundRobinScheduler(), 
+                                        new PreemptivePriorityScheduler()));
 
         // Add processes to schedulers
         // for(Scheduler scheduler : schedulers)
