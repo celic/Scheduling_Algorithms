@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Main
 {
-    private static final Integer N = 3; // Number of processes
+    private static final Integer N = 20; // Number of processes
     public static final Integer M = 1;  // Number of cores
     public static final Integer TCS = 15;  // Duration of context switching
 
