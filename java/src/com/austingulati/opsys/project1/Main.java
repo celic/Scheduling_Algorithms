@@ -32,17 +32,18 @@ public class Main
         List<Scheduler> schedulers = new ArrayList<Scheduler>();
 
         // Add schedulers to the list
-        schedulers.addAll(Arrays.asList(new FirstComeScheduler(), new ShortestJobFirstScheduler()));
+        schedulers.addAll(Arrays.asList(new FirstComeScheduler(), new ShortestJobFirstScheduler(), new RoundRobinScheduler()));
 
         // Add processes to schedulers
-        for(Scheduler scheduler : schedulers)
-        {
-            scheduler.addProcesses(processes);
-        }
+        // for(Scheduler scheduler : schedulers)
+        // {
+        //     scheduler.addProcesses(processes);
+        // }
 
         // Run schedulers
         for(Scheduler scheduler : schedulers)
         {
+            scheduler.addProcesses(processes);
             System.out.println("Using scheduler: " + scheduler.getName());
             while(scheduler.hasUnfinishedProcesses())
             {
@@ -52,6 +53,11 @@ public class Main
 
             // Print final results
             scheduler.printResults();
+
+            for(Process process : processes)
+            {
+                process.reset();
+            }
         }
 
         // Run system

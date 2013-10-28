@@ -129,7 +129,6 @@ abstract class Scheduler
 
         for(Process process : waitingProcesses)
         {
-            // All waiting processes must wait
             process.pause();
         }
 

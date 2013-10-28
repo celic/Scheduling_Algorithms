@@ -16,7 +16,9 @@ public class Process
     {
         this.id = rhs.getId();
         this.timeRemaining = rhs.getTimeRemaining();
-        this.timeTotal = timeRemaining;
+        this.timeTotal = rhs.getTimeTotal();
+        this.timeInitiallyWaiting = rhs.getTimeInitiallyWaiting();
+        this.timeWaiting = rhs.getTimeWaiting();
         this.priority = rhs.getPriority();
     }
 
@@ -63,5 +65,12 @@ public class Process
     public void pause()
     {
         timeWaiting++;
+    }
+
+    public void reset()
+    {
+        timeRemaining = timeTotal;
+        timeWaiting = 0;
+        timeInitiallyWaiting = 0;
     }
 }
