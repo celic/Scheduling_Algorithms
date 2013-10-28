@@ -5,13 +5,26 @@ import java.util.List;
 
 abstract class Scheduler
 {
-    List<Process> processes = new ArrayList<Process>(), finishedProcesses = new ArrayList<Process>();
-    Process currentProcess = null;
-    Integer time = 0, workingTime = 0, waitingTime = 0, maxTime = 0, averageTime = 0, minTime = 0;
+    // Other variables
+    List<Process> waitingProcesses = new ArrayList<Process>(),
+        runningProcesses           = new ArrayList<Process>(), // Indexed by CPU #
+        finishedProcesses          = new ArrayList<Process>();
+    List<Integer> waitingTimes     = new ArrayList<Integer>(); // Indexed by CPU #
+    Integer time = 0, waitingTime = 0, maxTime = 0, averageTime = 0, minTime = 0;
+
+    public Scheduler()
+    {
+        // Initialize data indexed by CPU #
+        for(Integer i = 0; i < Main.CPU_COUNT; ++i)
+        {
+            runningProcesses.add(null);
+            waitingTimes.add(0);
+        }
+    }
 
     public void addProcess(Process process)
     {
-        processes.add(new Process(process));
+        waitingProcesses.add(new Process(process));
     }
 
     public void addProcesses(List<Process> processes)
@@ -22,13 +35,30 @@ abstract class Scheduler
         }
     }
 
-    public Boolean hasProcesses()
+    public Boolean hasWaitingProcesses()
     {
-        return processes.size() > 0;
+        return waitingProcesses.size() > 0;
     }
 
-    // Returns the current process
-    abstract Process getProcess();
+    public Boolean hasRunningProcesses()
+    {
+        for(Process process : runningProcesses)
+        {
+            if(process != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean hasUnfinishedProcesses()
+    {
+        return hasWaitingProcesses() || hasRunningProcesses();
+    }
+
+    // Returns the current process for a certain processor
+    abstract Process getNextProcess(Integer processor);
 
     // Returns the name of the scheduler
     abstract String getName();
@@ -36,93 +66,78 @@ abstract class Scheduler
     // Increments to the next step
     public void tick()
     {
-        if(getWaitingTime() > 0)
+        for(Integer i = 0; i < Main.CPU_COUNT; ++i)
         {
-            setWaitingTime(getWaitingTime() - 1);
-            for(Process process : processes)
+            Integer waitingTime = waitingTimes.get(i);
+            Process currentProcess = runningProcesses.get(i);
+            if(waitingTime > 0)
             {
-                // All processes are paused
-                process.pause();
+                // The CPU is currently waiting
+                waitingTimes.set(i, --waitingTime);
+                currentProcess.pause();
+                if(waitingTime == 0)
+                {
+                    System.out.printf("[time %dms] Process %d created (requires %dms CPU time)\n", time, currentProcess.getId(), currentProcess.getTimeRemaining());
+                }
+                continue;
             }
-            return;
+
+            if(currentProcess == null)
+            {
+                // This only happens if the CPU is idle
+            }
+            else
+            {
+                currentProcess.run();
+                // If this process has terminated
+                if(currentProcess.getTimeRemaining() == 0)
+                {
+                    // Display some information about it
+                    System.out.printf("[time %dms] Process %d completed its CPU burst (turnaround time %dms, initial wait time %dms, total wait time %dms)\n", time, currentProcess.getId(), currentProcess.getTimeTotal(), currentProcess.getTimeInitiallyWaiting(), currentProcess.getTimeWaiting());
+
+                    // Remove the process from the set of running
+                    runningProcesses.set(i, null);
+
+                    // Add it to the set of finished
+                    finishedProcesses.add(currentProcess);
+                }
+            }
+
+            Process nextProcess = getNextProcess(i);
+            if(nextProcess == null)
+            {
+                // We're done for now, there are no more processes, CPU is idle
+                continue;
+            }
+
+            if(nextProcess != currentProcess)
+            {
+                if(currentProcess != null)
+                {
+                    // A process was just running, we need a context switch
+                    System.out.printf("[time %dms] Context switch (swapping out process %d for process %d in CPU %s)\n", time, currentProcess.getId(), nextProcess.getId(), Character.toString((char) (65 + i)));
+                    waitingTimes.set(i, Main.CONTEXT_SWITCH);
+                }
+                else
+                {
+                    // This is the first process so start it now
+                    System.out.printf("[time %dms] Process %d created (requires %dms CPU time)\n", time, nextProcess.getId(), nextProcess.getTimeRemaining());
+                }
+                runningProcesses.set(i, nextProcess);
+            }
         }
 
-        if(hasCurrentProcess())
+        for(Process process : waitingProcesses)
         {
-            getCurrentProcess().run();
-            if(getCurrentProcess().getTimeRemaining() == 0)
-            {
-                Process lastProcess = getCurrentProcess();
-                System.out.printf("[time %dms] Process %d completed its CPU burst (turnaround time %dms, initial wait time %dms, total wait time %dms)\n", time, lastProcess.getId(), lastProcess.getTimeTotal(), lastProcess.getTimeInitiallyWaiting(), lastProcess.getTimeWaiting());
-                removeProcess(lastProcess);
-                setCurrentProcess(null);
-                setWorkingTime(0);
-            }
-        }
-
-        Process nextProcess = getProcess();
-        if(getCurrentProcess() == null && nextProcess != null)
-        {
-            System.out.printf("[time %dms] Process %d created (requires %dms CPU time)\n", time, nextProcess.getId(), nextProcess.getTimeRemaining());
-        }
-        setCurrentProcess(nextProcess);
-
-        for(Process process : processes)
-        {
-            if(getCurrentProcess() == null || process.getId() != getCurrentProcess().getId())
-            {
-                process.pause();
-            }
+            process.pause();
         }
 
         time++;
-        workingTime++;
-    }
-
-    public Boolean hasCurrentProcess()
-    {
-        return currentProcess != null;
-    }
-
-    public Process getCurrentProcess()
-    {
-        return currentProcess;
-    }
-
-    public void setCurrentProcess(Process process)
-    {
-        this.currentProcess = process;
     }
 
     public Integer getTime()
     {
         return time;
-    }
-
-    public Integer getWorkingTime()
-    {
-        return workingTime;
-    }
-
-    public void setWorkingTime(Integer workingTime)
-    {
-        this.workingTime = workingTime;
-    }
-
-    public void setWaitingTime(Integer waitingTime)
-    {
-        this.waitingTime = waitingTime;
-    }
-
-    public Integer getWaitingTime()
-    {
-        return waitingTime;
-    }
-
-    public void removeProcess(Process process)
-    {
-        processes.remove(process);
-        finishedProcesses.add(process);
     }
 
     public void printResults()
@@ -179,7 +194,7 @@ abstract class Scheduler
         avgInitialWaitTime /= finishedProcessesSize;
         avgTotalWaitTime /= finishedProcessesSize;
 
-        System.out.printf("Number of CPUs: %d\n", Main.M);
+        System.out.printf("Number of CPUs: %d\n", Main.CPU_COUNT);
         System.out.printf("Turnaround time: min %dms; avg %dms; max %dms\n", minTurnaroundTime, avgTurnaroundTime, maxTurnaroundTime);
         System.out.printf("Initial wait time: min %dms; avg %dms; max %dms\n", minInitialWaitTime, avgInitialWaitTime, maxInitialWaitTime);
         System.out.printf("Total wait time: min %dms; avg %dms; max %dms\n\n", minTotalWaitTime, avgTotalWaitTime, maxTotalWaitTime);

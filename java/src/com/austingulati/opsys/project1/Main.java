@@ -8,8 +8,8 @@ import java.util.Random;
 public class Main
 {
     private static final Integer N = 20; // Number of processes
-    public static final Integer M = 1;  // Number of cores
-    public static final Integer TCS = 15;  // Duration of context switching
+    public static final Integer CPU_COUNT = 2;
+    public static final Integer CONTEXT_SWITCH = 15;
 
     public static void main(String[] args)
     {
@@ -31,25 +31,21 @@ public class Main
         // Create schedulers
         List<Scheduler> schedulers = new ArrayList<Scheduler>();
 
-        // Need a temp object for a preemptive SJF
-        ShortestJobFirstScheduler preemptiveShortestJob = new ShortestJobFirstScheduler();
-        preemptiveShortestJob.enablePreemption();
-
         // Add schedulers to the list
-        //schedulers.addAll(Arrays.asList(new FirstComeScheduler(), new ShortestJobFirstScheduler(), preemptiveShortestJob));
-        schedulers.addAll(Arrays.asList(new RoundRobinScheduler()));
+        schedulers.addAll(Arrays.asList(new FirstComeScheduler(), new ShortestJobFirstScheduler(), new RoundRobinScheduler()));
 
         // Add processes to schedulers
-        for(Scheduler scheduler : schedulers)
-        {
-            scheduler.addProcesses(processes);
-        }
+        // for(Scheduler scheduler : schedulers)
+        // {
+        //     scheduler.addProcesses(processes);
+        // }
 
         // Run schedulers
         for(Scheduler scheduler : schedulers)
         {
+            scheduler.addProcesses(processes);
             System.out.println("Using scheduler: " + scheduler.getName());
-            while(scheduler.hasProcesses())
+            while(scheduler.hasUnfinishedProcesses())
             {
                 scheduler.tick();
             }
@@ -57,6 +53,11 @@ public class Main
 
             // Print final results
             scheduler.printResults();
+
+            for(Process process : processes)
+            {
+                process.reset();
+            }
         }
 
         // Run system

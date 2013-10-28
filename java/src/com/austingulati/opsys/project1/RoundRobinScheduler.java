@@ -10,21 +10,22 @@ class RoundRobinScheduler extends Scheduler
         return "Round Robin";
     }
 
-    public Process getProcess()
+    public Process getNextProcess(Integer processor)
     {
-        if(processes.size() == 0)
+        Process currentProcess = runningProcesses.get(processor);
+        if(currentProcess != null)
         {
-            return null;
+            Integer timeRemaining = currentProcess.getTimeRemaining(),
+                timeTotal = currentProcess.getTimeTotal();
+            if((timeTotal - timeRemaining) % sliceLength > 0)
+            {
+                return currentProcess;
+            }
+            // Otherwise, stick it on the end of the list
+            addProcess(currentProcess);
+            runningProcesses.set(processor, null);
         }
-        else if(getWorkingTime() % sliceLength == 0)   // If a process ends on say, 165ms, nothing happens the other 35 ms
-        {
-            // System.out.printf("Context Switching FROM: %d TO: %d\n", key, ((key+1)%processes.size()));
-            key = (key + 1) % processes.size();
-            return processes.get(key);
-        }
-        else
-        {
-            return getCurrentProcess();
-        }
+        if(waitingProcesses.size() == 0) return null;
+        return waitingProcesses.remove(0);
     }
 }
