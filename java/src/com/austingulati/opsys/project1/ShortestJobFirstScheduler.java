@@ -19,28 +19,29 @@ class ShortestJobFirstScheduler extends Scheduler
         preemption = false;
     }
 
-    public Process getProcess()
+    public Process getNextProcess(Integer processor)
     {
-        if(processes.size() == 0)
+        if(runningProcesses.get(processor) != null)
+        {
+            return runningProcesses.get(processor);
+        }
+        if(waitingProcesses.size() == 0)
         {
             return null;
         }
-        else if(hasCurrentProcess())
-        {
-            return getCurrentProcess();
-        }
 
-        Process shortestProcess = processes.get(0);
-        Integer shortestTime = shortestProcess.getTimeRemaining();
-        for(Process process : processes)
+        Integer shortestProcess = 0;
+        Integer shortestTime = waitingProcesses.get(0).getTimeRemaining();
+        for(Integer i = 0; i < waitingProcesses.size(); ++i)
         {
+            Process process = waitingProcesses.get(i);
             if(process.getTimeRemaining() < shortestTime)
             {
                 shortestTime = process.getTimeRemaining();
-                shortestProcess = process;
+                shortestProcess = i;
             }
         }
 
-        return shortestProcess;
+        return waitingProcesses.remove((int) shortestProcess);
     }
 }
