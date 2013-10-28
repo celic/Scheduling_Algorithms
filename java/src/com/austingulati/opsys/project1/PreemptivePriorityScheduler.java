@@ -2,7 +2,7 @@ package com.austingulati.opsys.project1;
 
 class PreemptivePriorityScheduler extends Scheduler
 {
-    private Boolean preemptive = true;
+    private Integer workingPriority = 0;
 
     public String getName()
     {
@@ -11,6 +11,24 @@ class PreemptivePriorityScheduler extends Scheduler
 
     public Process getNextProcess(Integer processor)
     {
-        return null;
+        Process currentProcess = runningProcesses.get(processor);
+        
+        if(currentProcess != null)
+        {
+            Integer timeRemaining = currentProcess.getTimeRemaining(),
+                timeTotal = currentProcess.getTimeTotal();
+            
+            if((timeTotal - timeRemaining) % sliceLength > 0)
+            {
+                return currentProcess;
+            }
+            
+            // Otherwise, stick it on the end of the list
+            addProcess(currentProcess);
+            runningProcesses.set(processor, null);
+        }
+
+        if(waitingProcesses.size() == 0) return null;
+        return waitingProcesses.remove(0);
     }
 }
