@@ -15,3 +15,11 @@ Touched up some things. We need to implement TCS, time for context switches, whi
 It doesn't matter for part I, but I preemptive and non-preemptive SJF two separate instances of the object because that is what we will need for part II (separate stats and such.) I also added more stats to the Scheduler class that will have to be worked in eventually and outputted after all processes run in a comparison.
 
 I lastly imported his ExponentialRandom class so we can call for the random numbers as they ask for part II, again not necessary now but will be later.
+
+--------
+
+Round Robin - If a process ends with time left in its burst, nothing happens.
+			- It should switch to the next process
+				- This means the times will not end in even 00s
+				- Reset workingTime variable in RR when a process ends
+				- Check context switching against workingTime variable instead of overall time
