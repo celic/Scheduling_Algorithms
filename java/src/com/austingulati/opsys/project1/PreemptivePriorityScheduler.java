@@ -16,10 +16,9 @@ class PreemptivePriorityScheduler extends Scheduler
         // If a process is preempted with a priority less than the workingPriority, it gains full access
         // otherwise it is just put at the end of the RR cycle
 
-
-
         Process currentProcess = runningProcesses.get(processor);
         
+        // Continue with the current process if it exists
         if(currentProcess != null)
         {
             Integer timeRemaining = currentProcess.getTimeRemaining(),
@@ -38,17 +37,24 @@ class PreemptivePriorityScheduler extends Scheduler
         // No processes left
         if(waitingProcesses.size() == 0) return null;
 
-        for(Process nextProcess : waitingProcesses)
+        // Sift through priorties in ascending order until a process is found
+        for(int currentPriority = workingPriority; currentPriority <= 4; currentPriority++)
         {
-            if(nextProcess.getPriority() == workingPriority)
+            for(Process nextProcess : waitingProcesses)
             {
-                int indexToRemove = waitingProcesses.indexOf(nextProcess);
-                return waitingProcesses.remove(indexToRemove);
+                if(nextProcess.getPriority() == workingPriority)
+                {
+                    // Set new priority for efficiency
+                    workingPriority = currentPriority;
+
+                    // Remove found process from waitingProcesses list
+                    int indexToRemove = waitingProcesses.indexOf(nextProcess);
+                    return waitingProcesses.remove(indexToRemove);
+                }
             }
         }
 
-        // No more processes left, move to lower priority
-        workingPriority++;
-
+        // No valid processes were found
+        return null;
     }
 }
