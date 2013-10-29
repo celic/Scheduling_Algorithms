@@ -2,7 +2,6 @@ package com.austingulati.opsys.project1;
 
 class RoundRobinScheduler extends Scheduler
 {
-    private Integer key = 0;
     private Integer sliceLength = 100; // Slice length in ms
 
     public String getName()

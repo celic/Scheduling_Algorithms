@@ -54,6 +54,7 @@ abstract class Scheduler
 
     public Boolean hasUnfinishedProcesses()
     {
+        // System.out.println(hasWaitingProcesses() + " || " + hasRunningProcesses());
         return hasWaitingProcesses() || hasRunningProcesses();
     }
 
@@ -77,7 +78,7 @@ abstract class Scheduler
                 currentProcess.pause();
                 if(waitingTime == 0)
                 {
-                    System.out.printf("[time %dms] Process %d created (requires %dms CPU time)\n", time, currentProcess.getId(), currentProcess.getTimeRemaining());
+                    System.out.printf("[time %dms] Process %d created (requires %dms CPU time, priority is %d)\n", time, currentProcess.getId(), currentProcess.getTimeRemaining(), currentProcess.getPriority());
                 }
                 continue;
             }
@@ -121,7 +122,7 @@ abstract class Scheduler
                 else
                 {
                     // This is the first process so start it now
-                    System.out.printf("[time %dms] Process %d created (requires %dms CPU time)\n", time, nextProcess.getId(), nextProcess.getTimeRemaining());
+                    System.out.printf("[time %dms] Process %d created (requires %dms CPU time, priority is %d)\n", time, nextProcess.getId(), nextProcess.getTimeRemaining(), nextProcess.getPriority());
                 }
                 runningProcesses.set(i, nextProcess);
             }
