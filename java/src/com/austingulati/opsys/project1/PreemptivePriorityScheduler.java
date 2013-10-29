@@ -11,6 +11,13 @@ class PreemptivePriorityScheduler extends Scheduler
 
     public Process getNextProcess(Integer processor)
     {
+        // Working priority is the current level of priority being evaluated in RR fashion by the CPUs
+
+        // If a process is preempted with a priority less than the workingPriority, it gains full access
+        // otherwise it is just put at the end of the RR cycle
+
+
+
         Process currentProcess = runningProcesses.get(processor);
         
         if(currentProcess != null)
@@ -23,12 +30,25 @@ class PreemptivePriorityScheduler extends Scheduler
                 return currentProcess;
             }
             
-            // Otherwise, stick it on the end of the list
+            // Process finished its burst, stick it on the end of the list
             addProcess(currentProcess);
             runningProcesses.set(processor, null);
         }
 
+        // No processes left
         if(waitingProcesses.size() == 0) return null;
-        return waitingProcesses.remove(0);
+
+        for(Process nextProcess : waitingProcesses)
+        {
+            if(nextProcess.getPriority() == workingPriority)
+            {
+                int indexToRemove = waitingProcesses.indexOf(nextProcess);
+                return waitingProcesses.remove(indexToRemove);
+            }
+        }
+
+        // No more processes left, move to lower priority
+        workingPriority++;
+
     }
 }
