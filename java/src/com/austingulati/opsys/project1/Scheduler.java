@@ -2,6 +2,7 @@ package com.austingulati.opsys.project1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collection;
 
 abstract class Scheduler
 {
@@ -27,7 +28,7 @@ abstract class Scheduler
         waitingProcesses.add(new Process(process));
     }
 
-    public void addProcesses(List<Process> processes)
+    public void addProcesses(Collection<Process> processes)
     {
         for(Process process : processes)
         {
