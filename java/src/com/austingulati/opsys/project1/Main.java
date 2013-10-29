@@ -10,6 +10,7 @@ public class Main
     private static final Integer N = 20; // Number of processes
     public static final Integer CPU_COUNT = 2;
     public static final Integer CONTEXT_SWITCH = 15;
+    public static final Integer SLICE_LENGTH = 100; // Slice length for RR and PP Schedulers
 
     public static void main(String[] args)
     {
@@ -32,9 +33,9 @@ public class Main
         List<Scheduler> schedulers = new ArrayList<Scheduler>();
 
         // Add schedulers to the list
-        schedulers.addAll(Arrays.asList(new FirstComeScheduler(), 
-                                        new ShortestJobFirstScheduler(), 
-                                        new RoundRobinScheduler(), 
+        schedulers.addAll(Arrays.asList(//new FirstComeScheduler(), 
+                                        //new ShortestJobFirstScheduler(), 
+                                        //new RoundRobinScheduler(), 
                                         new PreemptivePriorityScheduler()));
 
         // Add processes to schedulers

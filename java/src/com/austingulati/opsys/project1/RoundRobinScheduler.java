@@ -3,7 +3,6 @@ package com.austingulati.opsys.project1;
 class RoundRobinScheduler extends Scheduler
 {
     private Integer key = 0;
-    private Integer sliceLength = 100; // Slice length in ms
 
     public String getName()
     {
@@ -17,7 +16,7 @@ class RoundRobinScheduler extends Scheduler
         {
             Integer timeRemaining = currentProcess.getTimeRemaining(),
                 timeTotal = currentProcess.getTimeTotal();
-            if((timeTotal - timeRemaining) % sliceLength > 0)
+            if((timeTotal - timeRemaining) % Main.SLICE_LENGTH > 0)
             {
                 return currentProcess;
             }

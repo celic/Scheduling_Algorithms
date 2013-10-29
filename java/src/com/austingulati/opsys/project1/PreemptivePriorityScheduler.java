@@ -18,7 +18,7 @@ class PreemptivePriorityScheduler extends Scheduler
             Integer timeRemaining = currentProcess.getTimeRemaining(),
                 timeTotal = currentProcess.getTimeTotal();
             
-            if((timeTotal - timeRemaining) % sliceLength > 0)
+            if((timeTotal - timeRemaining) % Main.SLICE_LENGTH > 0)
             {
                 return currentProcess;
             }
