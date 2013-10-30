@@ -2,7 +2,7 @@ package com.austingulati.opsys.project1;
 
 public class Process
 {
-    private Integer id, priority, timeRemaining, timeTotal = 0, timeInitiallyWaiting = 0, timeWaiting = 0;
+    private Integer id, priority, timeRemaining, timeTotal = 0, timeInitiallyWaiting = 0, timeWaiting = 0, timeRequested;
 
     public Process(Integer id, Integer timeRemaining, Integer priority)
     {
@@ -10,6 +10,15 @@ public class Process
         this.timeRemaining = timeRemaining;
         this.timeTotal = timeRemaining;
         this.priority = priority;
+    }
+
+    public Process(Integer id, Integer timeRemaining, Integer priority, Integer timeRequested)
+    {
+        this.id = id;
+        this.timeRemaining = timeRemaining;
+        this.timeTotal = timeRemaining;
+        this.priority = priority;
+        this.timeRequested = timeRequested;
     }
 
     public Process(Process rhs)
@@ -20,6 +29,7 @@ public class Process
         this.timeInitiallyWaiting = rhs.getTimeInitiallyWaiting();
         this.timeWaiting = rhs.getTimeWaiting();
         this.priority = rhs.getPriority();
+        this.timeRequested = rhs.getTimeRequested();
     }
 
     public Integer getTimeRemaining()
@@ -50,6 +60,11 @@ public class Process
     public Integer getPriority()
     {
         return this.priority;
+    }
+
+    public Integer getTimeRequested()
+    {
+        return this.timeRequested;
     }
 
     public void run()
