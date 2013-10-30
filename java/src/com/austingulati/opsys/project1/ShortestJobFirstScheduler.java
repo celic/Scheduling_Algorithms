@@ -9,21 +9,24 @@ class ShortestJobFirstScheduler extends Scheduler
         return "Shortest Job First (SJF) with" + (preemption ? " preemption" : "out preemption");
     }
 
-    public void enablePreemption()
+    public ShortestJobFirstScheduler enablePreemption()
     {
         preemption = true;
+        return this;
     }
 
-    public void disablePreemption()
+    public ShortestJobFirstScheduler disablePreemption()
     {
         preemption = false;
+        return this;
     }
 
     public Process getNextProcess(Integer processor)
     {
-        if(runningProcesses.get(processor) != null)
+        Process currentProcess = runningProcesses.get(processor);
+        if(currentProcess != null && preemption == false)
         {
-            return runningProcesses.get(processor);
+            return currentProcess;
         }
         if(waitingProcesses.size() == 0)
         {
@@ -41,7 +44,14 @@ class ShortestJobFirstScheduler extends Scheduler
                 shortestProcess = i;
             }
         }
-
+        if(currentProcess != null && preemption)
+        {
+            if(shortestTime < currentProcess.getTimeRemaining())
+            {
+                addProcess(currentProcess);
+                runningProcesses.set(processor, null);
+            }
+        }
         return waitingProcesses.remove((int) shortestProcess);
     }
 }
