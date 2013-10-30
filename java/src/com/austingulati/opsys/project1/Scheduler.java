@@ -145,15 +145,15 @@ abstract class Scheduler
     public void printResults()
     {
         int minTurnaroundTime = Integer.MAX_VALUE;
-        int avgTurnaroundTime = 0;
+        double avgTurnaroundTime = 0;
         int maxTurnaroundTime = 0;
 
         int minInitialWaitTime = Integer.MAX_VALUE;
-        int avgInitialWaitTime = 0;
+        double avgInitialWaitTime = 0;
         int maxInitialWaitTime = 0;
         
         int minTotalWaitTime = Integer.MAX_VALUE;
-        int avgTotalWaitTime = 0;
+        double avgTotalWaitTime = 0;
         int maxTotalWaitTime = 0;
 
         for(Process process : finishedProcesses)
@@ -197,8 +197,8 @@ abstract class Scheduler
         avgTotalWaitTime /= finishedProcessesSize;
 
         System.out.printf("Number of CPUs: %d\n", Main.CPU_COUNT);
-        System.out.printf("Turnaround time: min %dms; avg %dms; max %dms\n", minTurnaroundTime, avgTurnaroundTime, maxTurnaroundTime);
-        System.out.printf("Initial wait time: min %dms; avg %dms; max %dms\n", minInitialWaitTime, avgInitialWaitTime, maxInitialWaitTime);
-        System.out.printf("Total wait time: min %dms; avg %dms; max %dms\n\n", minTotalWaitTime, avgTotalWaitTime, maxTotalWaitTime);
+        System.out.printf("Turnaround time: min %dms; avg %.3fms; max %dms\n", minTurnaroundTime, avgTurnaroundTime, maxTurnaroundTime);
+        System.out.printf("Initial wait time: min %dms; avg %.3fms; max %dms\n", minInitialWaitTime, avgInitialWaitTime, maxInitialWaitTime);
+        System.out.printf("Total wait time: min %dms; avg %.3fms; max %dms\n\n", minTotalWaitTime, avgTotalWaitTime, maxTotalWaitTime);
     }
 }
