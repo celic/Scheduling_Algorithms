@@ -94,6 +94,9 @@ abstract class Scheduler
                 // If this process has terminated
                 if(currentProcess.getTimeRemaining() == 0)
                 {
+                    // True turnaround time is the time taken to run process and the total time waiting
+                    currentProcess.setTimeTotal();
+
                     // Display some information about it
                     System.out.printf("[time %dms] Process %d completed its CPU burst (turnaround time %dms, initial wait time %dms, total wait time %dms)\n", time, currentProcess.getId(), currentProcess.getTimeTotal(), currentProcess.getTimeInitiallyWaiting(), currentProcess.getTimeWaiting());
 
@@ -158,6 +161,9 @@ abstract class Scheduler
 
         for(Process process : finishedProcesses)
         {
+            // True turnaround time is the time taken to run process and the total time waiting
+            // process.setTimeTotal();
+
             avgTurnaroundTime += process.getTimeTotal();
             avgInitialWaitTime += process.getTimeInitiallyWaiting();
             avgTotalWaitTime += process.getTimeWaiting();

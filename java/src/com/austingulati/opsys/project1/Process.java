@@ -88,4 +88,10 @@ public class Process
         timeWaiting = 0;
         timeInitiallyWaiting = 0;
     }
+
+    // True turnaround time is the time taken to run process and the total time waiting
+    public void setTimeTotal()
+    {
+        timeTotal += timeWaiting;
+    }
 }
