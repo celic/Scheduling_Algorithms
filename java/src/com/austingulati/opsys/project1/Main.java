@@ -1,3 +1,7 @@
+// Austin Gulati
+// Chris Celi
+// Damian Mastylo
+
 package com.austingulati.opsys.project1;
 
 import java.util.ArrayList;
@@ -39,7 +43,7 @@ public class Main
         for(Integer i = 0; i < N; ++i)
         {
             Integer time = random.nextInt(350) + 50;
-            Integer priority = random.nextInt(4);
+            Integer priority = random.nextInt(5);
             Integer requestedAt = 0;
             if(i > N/10)
             {

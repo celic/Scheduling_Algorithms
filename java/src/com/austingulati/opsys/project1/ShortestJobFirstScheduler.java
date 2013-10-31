@@ -50,6 +50,8 @@ class ShortestJobFirstScheduler extends Scheduler
             {
                 addProcess(currentProcess);
                 runningProcesses.set(processor, null);
+            } else {
+                return currentProcess;
             }
         }
         return waitingProcesses.remove((int) shortestProcess);
